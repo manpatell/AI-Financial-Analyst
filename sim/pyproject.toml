@@ -1,0 +1,27 @@
+[project]
+name = "ledgerline-sim"
+version = "0.1.0"
+description = "Synthetic French SME generator with planted finance problems and an answer key"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "faker>=30",
+    "numpy>=2.0",
+    "pydantic>=2.9",
+    "typer>=0.12",
+    "lxml>=5.3",
+    "reportlab>=4.2",
+    "factur-x>=3.1",
+    "pypdfium2>=4.30",
+    "pillow>=11",
+]
+
+[project.scripts]
+ledgerline-sim = "ledgerline_sim.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ledgerline_sim"]

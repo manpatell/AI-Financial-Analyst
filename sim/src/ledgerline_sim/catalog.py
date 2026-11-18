@@ -1,0 +1,206 @@
+"""Curated, fictional vendors, customers and products for "Ateliers Calvet SAS",
+a Lyon-based maker of office furniture. Names are invented; any resemblance is accidental.
+
+Each vendor spec: name, category, size, cadence, pay_method, terms, products
+[(name, unit price, VAT rate)], plus optional country/currency for foreign SaaS.
+"""
+
+from __future__ import annotations
+
+COMPANY = {
+    "name": "Ateliers Calvet SAS",
+    "street": "14 rue des Tanneurs",
+    "postcode": "69007",
+    "city": "Lyon",
+    "phone": "+33 4 72 00 41 18",
+    "email_domain": "ateliers-calvet.fr",
+}
+
+V20, V10, V55, V0 = "20", "10", "5.5", "0"
+
+VENDOR_SPECS: list[dict] = [
+    # --- raw materials (variable, seasonal) ---
+    dict(name="Métaux Rhône-Alpes SAS", category="materials", size="eti", cadence="variable",
+         weight=3.0, pay_method="transfer", terms=45,
+         products=[("Tube acier 30x30 - barre 6m", 38.40, V20), ("Tôle acier 2mm - m²", 52.10, V20),
+                   ("Profilé aluminium anodisé - barre 6m", 61.75, V20), ("Visserie inox - lot 500", 74.90, V20)]),
+    dict(name="Bois & Panneaux du Dauphiné", category="materials", size="sme", cadence="variable",
+         weight=3.0, pay_method="transfer", terms=45,
+         products=[("Panneau chêne massif 19mm - m²", 89.00, V20), ("Panneau MDF 18mm - plaque", 41.20, V20),
+                   ("Placage noyer - m²", 33.60, V20), ("Chant ABS 2mm - rouleau 50m", 27.80, V20)]),
+    dict(name="Textiles Techniques Lyonnais", category="materials", size="sme", cadence="variable",
+         weight=1.6, pay_method="transfer", terms=30,
+         products=[("Tissu enduction M1 - mètre", 18.90, V20), ("Mousse HR 35kg - plaque", 46.50, V20),
+                   ("Feutre acoustique 9mm - m²", 22.40, V20)]),
+    dict(name="Quincaillerie Pro Bonnard", category="materials", size="micro", cadence="variable",
+         weight=1.2, pay_method="transfer", terms=30,
+         products=[("Charnières invisibles - lot 20", 36.00, V20), ("Coulisses tiroir 450mm - paire", 14.70, V20),
+                   ("Vérins réglables - lot 4", 9.80, V20), ("Serrures à came - lot 10", 23.50, V20)]),
+    dict(name="Verrerie Industrielle de l'Ain", category="materials", size="sme", cadence="variable",
+         weight=0.9, pay_method="transfer", terms=60,
+         products=[("Verre trempé 8mm - m²", 96.00, V20), ("Verre feuilleté acoustique - m²", 128.00, V20)]),
+    dict(name="Peintures Époxy Saône", category="materials", size="sme", cadence="variable",
+         weight=1.0, pay_method="transfer", terms=45,
+         products=[("Poudre époxy RAL 9005 - 25kg", 212.00, V20), ("Poudre époxy RAL 7016 - 25kg", 218.50, V20),
+                   ("Dégraissant phosphatant - 200L", 386.00, V20)]),
+    dict(name="Composants Électriques Vallin", category="materials", size="sme", cadence="variable",
+         weight=1.1, pay_method="transfer", terms=30,
+         products=[("Moteur vérin bureau assis-debout", 64.00, V20), ("Boîtier commande mémoire", 27.30, V20),
+                   ("Bloc prises 3x230V + 2 USB-C", 31.90, V20)]),
+    dict(name="Plastiques Moulés Oyonnax", category="materials", size="eti", cadence="variable",
+         weight=1.3, pay_method="transfer", terms=60,
+         products=[("Patins polypropylène - lot 100", 41.00, V20), ("Passe-câbles - lot 50", 58.00, V20),
+                   ("Accoudoirs injectés - paire", 19.40, V20)]),
+    # --- logistics ---
+    dict(name="Transports Garnier Frères", category="logistics", size="sme", cadence="variable",
+         weight=2.4, pay_method="transfer", terms=30,
+         products=[("Livraison messagerie Rhône-Alpes", 145.00, V20), ("Affrètement semi complet", 890.00, V20),
+                   ("Hayon + mise en place", 95.00, V20)]),
+    dict(name="Express Fret Lyon", category="logistics", size="sme", cadence="variable",
+         weight=1.6, pay_method="transfer", terms=30,
+         products=[("Course express intra-Lyon", 68.00, V20), ("Livraison J+1 national - colis", 34.50, V20)]),
+    dict(name="Logistique Bellevue", category="logistics", size="eti", cadence="variable",
+         weight=1.0, pay_method="transfer", terms=45,
+         products=[("Stockage palette - mois", 18.00, V20), ("Préparation commande", 12.40, V20)]),
+    dict(name="Euro Palettes Services", category="logistics", size="micro", cadence="variable",
+         weight=0.6, pay_method="transfer", terms=30,
+         products=[("Palette EUR neuve", 14.20, V20), ("Reprise palettes - forfait", 60.00, V20)]),
+    # --- packaging ---
+    dict(name="Cartonnages Mérieux", category="packaging", size="sme", cadence="variable",
+         weight=1.3, pay_method="transfer", terms=45,
+         products=[("Carton double cannelure 1200x800", 6.40, V20), ("Coins de protection - lot 200", 48.00, V20)]),
+    dict(name="Emballages Éco Rhône", category="packaging", size="micro", cadence="variable",
+         weight=0.8, pay_method="transfer", terms=30,
+         products=[("Film étirable recyclé - rouleau", 21.00, V20), ("Papier calage kraft - rouleau", 33.00, V20)]),
+    dict(name="Calages Mousse Industrie", category="packaging", size="sme", cadence="variable",
+         weight=0.6, pay_method="transfer", terms=45,
+         products=[("Calage mousse découpé - lot 50", 112.00, V20)]),
+    # --- professional services ---
+    dict(name="Cabinet Fiducia Expertise", category="services", size="sme", cadence="monthly",
+         pay_method="transfer", terms=30,
+         products=[("Mission tenue comptable - mensuel", 1450.00, V20), ("Établissement bulletins de paie", 620.00, V20)]),
+    dict(name="Lefort & Associés Avocats", category="services", size="micro", cadence="quarterly",
+         pay_method="transfer", terms=30,
+         products=[("Honoraires conseil juridique", 2400.00, V20), ("Rédaction contrats", 1100.00, V20)]),
+    dict(name="Delmas Conseil Industriel", category="services", size="micro", cadence="variable",
+         weight=0.35, pay_method="transfer", terms=30,
+         products=[("Journée de conseil lean", 1150.00, V20)]),
+    dict(name="Atelier Graphique Pernet", category="marketing", size="micro", cadence="variable",
+         weight=0.4, pay_method="transfer", terms=30,
+         products=[("Création catalogue - forfait", 1800.00, V20), ("Shooting produits - journée", 950.00, V20)]),
+    dict(name="Salons Pro Événements", category="marketing", size="sme", cadence="variable",
+         weight=0.15, pay_method="transfer", terms=30,
+         products=[("Stand salon aménagement - forfait", 6400.00, V20)]),
+    dict(name="Digital Leads Agency", category="marketing", size="sme", cadence="monthly",
+         pay_method="transfer", terms=30,
+         products=[("Campagnes SEA - gestion mensuelle", 1200.00, V20), ("Budget média refacturé", 2100.00, V20)]),
+    # --- premises & utilities ---
+    dict(name="SCI Les Tanneurs", category="rent", size="micro", cadence="monthly",
+         pay_method="direct_debit", terms=5,
+         products=[("Loyer atelier et bureaux", 9800.00, V20), ("Provision charges", 850.00, V20)]),
+    dict(name="Énergie Lumière Entreprises", category="utilities", size="large", cadence="monthly",
+         pay_method="direct_debit", terms=15,
+         products=[("Consommation électricité - kWh", 0.1840, V20), ("Abonnement puissance", 214.00, V20)]),
+    dict(name="Eaux du Grand Lyon Services", category="utilities", size="large", cadence="quarterly",
+         pay_method="direct_debit", terms=20,
+         products=[("Consommation eau - m³", 4.12, V55), ("Abonnement assainissement", 96.00, V10)]),
+    dict(name="Télécom Pro Rhône", category="utilities", size="large", cadence="monthly",
+         pay_method="direct_debit", terms=15,
+         products=[("Fibre entreprise 1 Gb/s", 189.00, V20), ("Forfaits mobiles - ligne", 24.00, V20)]),
+    dict(name="Nettoyage Industriel Brun", category="maintenance", size="sme", cadence="monthly",
+         pay_method="transfer", terms=30,
+         products=[("Nettoyage atelier - mensuel", 1380.00, V20)]),
+    dict(name="Maintenance Machines Rival", category="maintenance", size="sme", cadence="variable",
+         weight=0.4, pay_method="transfer", terms=30,
+         products=[("Intervention technicien - heure", 78.00, V20), ("Pièces détachées CN", 340.00, V20)]),
+    # Similar name to "Quincaillerie Pro Bonnard" but a different company: an entity-resolution trap.
+    dict(name="Bonnard Électricité Générale", category="maintenance", size="micro", cadence="variable",
+         weight=0.3, pay_method="transfer", terms=30,
+         products=[("Intervention électricien - heure", 62.00, V20), ("Mise aux normes tableau", 890.00, V20)]),
+    dict(name="Assurances Mutuelle du Commerce", category="insurance", size="large", cadence="quarterly",
+         pay_method="direct_debit", terms=10,
+         products=[("Prime multirisque industrielle", 3150.00, V0), ("Prime RC professionnelle", 1240.00, V0)]),
+    dict(name="Flotte Auto Location Lyon", category="leasing", size="eti", cadence="monthly",
+         pay_method="direct_debit", terms=10,
+         products=[("Location longue durée utilitaire", 612.00, V20)]),
+    dict(name="Bureautique Services Ouest", category="leasing", size="sme", cadence="quarterly",
+         pay_method="direct_debit", terms=15,
+         products=[("Location copieur - trimestre", 486.00, V20), ("Copies couleur", 0.06, V20)]),
+    # --- SaaS (French) ---
+    dict(name="Paylo Paie SAS", category="saas", size="sme", cadence="monthly",
+         pay_method="direct_debit", terms=0, seats=26,
+         products=[("Logiciel paie - par salarié", 9.50, V20)]),
+    dict(name="Stockwise ERP", category="saas", size="sme", cadence="monthly",
+         pay_method="direct_debit", terms=0, seats=8,
+         products=[("Licence ERP production - utilisateur", 79.00, V20)]),
+    dict(name="Signéo SAS", category="saas", size="micro", cadence="monthly",
+         pay_method="card", terms=0, seats=5,
+         products=[("Signature électronique - utilisateur", 18.00, V20)]),
+    dict(name="Planifo Cloud", category="saas", size="micro", cadence="monthly",
+         pay_method="card", terms=0, seats=12,
+         products=[("Planning atelier - utilisateur", 14.00, V20)]),
+    dict(name="Kalimo CRM", category="saas", size="sme", cadence="monthly",
+         pay_method="card", terms=0, seats=6,
+         products=[("CRM commercial - utilisateur", 45.00, V20)]),
+    # --- SaaS (foreign, reverse charge) ---
+    dict(name="Nimbus Drive Inc.", category="saas", size="large", cadence="monthly",
+         pay_method="card", terms=0, country="US", currency="USD", seats=26,
+         products=[("Cloud storage - Business seat", 15.00, V0)]),
+    dict(name="Huddlecast Video Inc.", category="saas", size="large", cadence="monthly",
+         pay_method="card", terms=0, country="US", currency="USD", seats=10,
+         products=[("Video meetings - Pro seat", 16.00, V0)]),
+    dict(name="Pagewise Docs Ltd", category="saas", size="sme", cadence="monthly",
+         pay_method="card", terms=0, country="IE", currency="EUR", seats=15,
+         products=[("Knowledge base - Team seat", 10.00, V0)]),
+    dict(name="Vectorly Design Ltd", category="saas", size="sme", cadence="monthly",
+         pay_method="card", terms=0, country="IE", currency="EUR", seats=4,
+         products=[("Design suite - Professional seat", 45.00, V0)]),
+]
+
+CUSTOMER_SPECS: list[dict] = [
+    # name, city, weight (share of sales), delay mean/sd vs due date, terms
+    dict(name="Groupe Hôtelier Arcadia", city="Paris", weight=2.5, delay=4, sd=6, terms=45),
+    dict(name="Banque Régionale Saône-Loire", city="Mâcon", weight=1.8, delay=1, sd=3, terms=30),
+    dict(name="Cowork Nation SAS", city="Lyon", weight=1.6, delay=38, sd=14, terms=30),       # late payer
+    dict(name="Clinique des Monts d'Or", city="Lyon", weight=1.2, delay=6, sd=5, terms=60),
+    dict(name="Université Lumière Formation Continue", city="Lyon", weight=1.0, delay=22, sd=10, terms=30),
+    dict(name="Agence Immobilière Perrache", city="Lyon", weight=0.6, delay=2, sd=4, terms=30),
+    dict(name="Studio Architecture Lemaire", city="Grenoble", weight=0.7, delay=52, sd=18, terms=30),  # late payer
+    dict(name="Mairie de Villefranche - Services Techniques", city="Villefranche-sur-Saône", weight=0.9,
+         delay=18, sd=9, terms=30),
+    dict(name="Tech Valley Incubateur", city="Grenoble", weight=0.8, delay=3, sd=4, terms=30),
+    dict(name="Restaurants Bouchon & Co", city="Lyon", weight=0.5, delay=44, sd=15, terms=30),       # late payer
+    dict(name="Laboratoires Vercors Pharma", city="Grenoble", weight=1.4, delay=0, sd=2, terms=60, statement=True),
+    dict(name="Assurances Mutuelles Rhodaniennes", city="Lyon", weight=1.3, delay=5, sd=4, terms=45, statement=True),
+    dict(name="École Supérieure de Design Lyon", city="Lyon", weight=0.6, delay=9, sd=6, terms=30),
+    dict(name="Cabinet Médical Bellecour", city="Lyon", weight=0.3, delay=3, sd=3, terms=30),
+    dict(name="Concept Store Croix-Rousse", city="Lyon", weight=0.3, delay=12, sd=8, terms=30),
+]
+LATE_PAYER_THRESHOLD_DAYS = 30
+
+AR_PRODUCTS = [
+    ("Bureau assis-debout électrique 160x80", 689.00, V20),
+    ("Table de réunion chêne 240x110", 2340.00, V20),
+    ("Caisson mobile 3 tiroirs", 245.00, V20),
+    ("Armoire haute portes battantes", 518.00, V20),
+    ("Cloison acoustique sur pied", 412.00, V20),
+    ("Banquette lounge 3 places", 1690.00, V20),
+    ("Bibliothèque modulaire", 760.00, V20),
+    ("Livraison et installation - forfait", 450.00, V20),
+    ("Étude d'aménagement - forfait", 1200.00, V20),
+]
+
+NUMBER_PATTERNS = [
+    "INV-{n}",
+    "F{yyyy}-{n4}",
+    "FA{yy}{mm}-{n3}",
+    "{n6}",
+    "FAC/{yyyy}/{n5}",
+    "{yy}{n5}",
+    "FCT{n}",
+]
+
+FIRST_NAMES = ["Camille", "Julien", "Sophie", "Thomas", "Claire", "Nicolas", "Léa", "Antoine",
+               "Manon", "Hugo", "Élodie", "Mathieu", "Inès", "Romain", "Sarah", "Maxime"]
+LAST_NAMES = ["Martin", "Bernard", "Dubois", "Lefèvre", "Moreau", "Girard", "Roux", "Fournier",
+              "Mercier", "Blanc", "Guerin", "Faure", "Chevalier", "Lambert", "Bonnet", "Rousseau"]

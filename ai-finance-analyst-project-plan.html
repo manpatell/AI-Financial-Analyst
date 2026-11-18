@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Finance Analyst: Project Plan</title>
+<style>
+  :root{
+    --bg:#0e1116; --panel:#161b22; --panel2:#1c232d; --line:#2a323d;
+    --text:#e6edf3; --muted:#9aa7b4; --accent:#4cc38a; --accent2:#5aa9ff;
+    --warn:#f2b84b; --red:#ff6b6b; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;font-size:16px}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 18px 80px}
+  header{padding:28px 0 8px}
+  .eyebrow{color:var(--accent);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+  h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:8px 0 10px}
+  h2{font-size:24px;margin:52px 0 6px}
+  h3{font-size:18px;margin:0 0 6px}
+  p{margin:8px 0}
+  .lead{color:var(--muted);font-size:18px;max-width:760px}
+  .muted{color:var(--muted)}
+  .sub{color:var(--muted);margin:0 0 18px}
+  nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+  nav a{color:var(--text);text-decoration:none;border:1px solid var(--line);border-radius:999px;
+    padding:6px 12px;font-size:13px;background:var(--panel)}
+  nav a:hover{border-color:var(--accent)}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .card.hl{border-color:rgba(76,195,138,.55);background:linear-gradient(180deg,rgba(76,195,138,.08),var(--panel))}
+  .stat{font-size:30px;font-weight:800;color:var(--accent);line-height:1.1}
+  .stat.blue{color:var(--accent2)} .stat.warn{color:var(--warn)} .stat.red{color:var(--red)}
+  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    padding:3px 8px;border-radius:999px;margin-right:6px;margin-bottom:6px}
+  .t-value{background:rgba(76,195,138,.15);color:var(--accent)}
+  .t-flex{background:rgba(90,169,255,.15);color:var(--accent2)}
+  .t-core{background:rgba(242,184,75,.15);color:var(--warn)}
+  ul{padding-left:20px;margin:8px 0} li{margin:4px 0}
+  .feature{display:grid;grid-template-columns:44px 1fr;gap:12px}
+  .num{width:44px;height:44px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent)}
+  .why{font-size:14px;color:var(--muted);border-left:3px solid var(--line);padding-left:10px;margin-top:8px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}
+  .arch{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;white-space:pre;
+    overflow-x:auto;background:#0a0d12;border:1px solid var(--line);border-radius:var(--radius);padding:16px;color:#cfe3d6}
+  .week{position:relative;padding-left:22px;border-left:2px solid var(--line);margin-left:8px;padding-bottom:18px}
+  .week:before{content:"";position:absolute;left:-8px;top:4px;width:14px;height:14px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 0 4px var(--bg)}
+  .week h3{margin-bottom:2px}
+  .week .when{color:var(--accent);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+  .done{color:var(--muted);font-size:14px;margin-top:6px}
+  .done b{color:var(--text)}
+  .callout{background:var(--panel2);border:1px dashed var(--accent);border-radius:var(--radius);padding:16px 18px}
+  .sources li{font-size:14px;color:var(--muted)}
+  .sources a{color:var(--accent2)}
+  code{background:var(--panel2);padding:1px 6px;border-radius:6px;font-size:13px}
+  footer{margin-top:60px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Project plan · v1 · Nov 2026</div>
+  <h1>Ledgerline: an AI finance analyst that finds money and never makes up a number</h1>
+  <p class="lead">An agent that reads a company's invoices, bank transactions and e-invoices, then reconciles them, catches duplicate payments and payment fraud, forecasts cash, and answers finance questions. Every number links back to its source document. <span class="muted">(Ledgerline is a working name. Check it's free before you launch.)</span></p>
+  <nav>
+    <a href="#market">Market</a><a href="#pitch">The pitch</a><a href="#features">Features</a>
+    <a href="#arch">Architecture</a><a href="#stack">Stack</a><a href="#data">Data</a>
+    <a href="#plan">6-week plan</a><a href="#metrics">Metrics</a><a href="#launch">Launch</a>
+    <a href="#risks">Risks</a><a href="#sources">Sources</a>
+  </nav>
+</header>
+
+<!-- MARKET -->
+<h2 id="market">1. What the research says</h2>
+<p class="sub">Why this is worth building now, and where the gaps are.</p>
+<div class="grid g3">
+  <div class="card"><div class="stat">0.8–2%</div><p>of all disbursements are duplicate or wrong payments, per APQC benchmarks. Even top performers sit around 0.8%.</p></div>
+  <div class="card"><div class="stat red">$3.05B</div><p>in business email compromise losses reported to the FBI in 2025. A classic version is the fake "our bank details changed" email.</p></div>
+  <div class="card"><div class="stat warn">62%</div><p>of mid-market finance executives have struggled to manage or scale cash flow forecasting (PYMNTS, Aug 2026).</p></div>
+  <div class="card"><div class="stat blue">1 Sep 2026</div><p>From this date, every VAT-registered business in France must be able to receive structured e-invoices (Factur-X, UBL, CII). SMEs must start issuing them in Sept 2027.</p></div>
+  <div class="card"><div class="stat">$1B</div><p>Rillet's valuation after its $100M Series C in Aug 2026. Investors are betting heavily on AI-native finance tools.</p></div>
+  <div class="card"><div class="stat blue">86–91%</div><p>Typical field accuracy of GPT-4o-class LLMs on invoice extraction in public benchmarks. Line items and tables are the weak spot.</p></div>
+</div>
+
+<div class="grid g2" style="margin-top:14px">
+  <div class="card">
+    <h3>What the big players already do</h3>
+    <ul>
+      <li>Invoice capture, GL coding and approval routing (Vic.ai, Tipalti, Stampli)</li>
+      <li>Close and reconciliation (BlackLine, Rillet)</li>
+      <li>Automatic transaction categorisation; Puzzle claims up to 98%</li>
+    </ul>
+  </div>
+  <div class="card hl">
+    <h3>The gaps you can show off</h3>
+    <ul>
+      <li><b>Trust:</b> finance teams fear made-up numbers. Separate approaches report the best results when the LLM decides the steps and plain code does the maths.</li>
+      <li><b>Silos:</b> AP, reconciliation and forecasting usually live in separate tools. Shared data is where the biggest gains are.</li>
+      <li><b>Fuzzy duplicates:</b> most ERPs only catch exact matches, so "INV-5521" and "5521-OPS" both get paid.</li>
+      <li><b>France e-invoicing:</b> it's new and messy, and few portfolio projects handle Factur-X.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PITCH -->
+<h2 id="pitch">2. The pitch in one sentence</h2>
+<div class="callout">
+  <p style="font-size:18px;margin:0"><b>"Upload a year of a company's invoices and bank statements. In three minutes Ledgerline finds €18,400 in duplicate payments, blocks one fake bank-change request, reconciles 96% of transactions, and tells you the runway is 14 months. Click any number to see the exact invoice it came from."</b></p>
+  <p class="muted" style="margin-top:10px">That's your demo video. Each feature below exists to make one part of that sentence true and provable.</p>
+</div>
+
+<!-- FEATURES -->
+<h2 id="features">3. Features that add real value and that you can show off</h2>
+<p class="sub"><span class="tag t-core">Core</span>needed to work · <span class="tag t-value">Value</span>saves money or time · <span class="tag t-flex">Flex</span>sets you apart technically</p>
+
+<div class="grid">
+
+  <div class="card feature"><div class="num">1</div><div>
+    <span class="tag t-flex">Flex</span><span class="tag t-value">Value</span>
+    <h3>"Proof for every number": the LLM can't do maths</h3>
+    <p>The LLM only plans the steps and picks tools. All arithmetic, filters and joins run as SQL or Python. Every figure in an answer or report carries a provenance ID you can click to open the invoice line or bank transaction behind it. A validator blocks any answer containing a number that doesn't trace to a tool output.</p>
+    <p class="why">The #1 fear of finance teams. You can say "0 unverified numbers across 500 eval questions" and back it up.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">2</div><div>
+    <span class="tag t-flex">Flex</span><span class="tag t-core">Core</span>
+    <h3>E-invoice native: Factur-X, UBL and CII first, PDF as fallback</h3>
+    <p>When the structured XML is present (from Factur-X PDFs or UBL files), the parser uses it and gets the fields 100% right. Scanned or plain PDFs go through vision-LLM extraction with per-field confidence scores. A panel shows the share of invoices arriving structured versus scanned.</p>
+    <p class="why">Any Paris recruiter or CFO knows about the Sept 2026 reform. Very few portfolio projects handle it.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">3</div><div>
+    <span class="tag t-value">Value</span><span class="tag t-flex">Flex</span>
+    <h3>Fuzzy duplicate payment hunter</h3>
+    <p>Cleans up invoice numbers, vendor names and amounts, then scores invoice pairs with fuzzy matching plus a small classifier. It catches the patterns ERPs miss: changed references ("INV-5521" vs "5521-OPS"), the same invoice arriving through two channels, credit notes never applied, and the same vendor saved under two names. Output: "€X recoverable", with each pair shown side by side.</p>
+    <p class="why">Turns straight into money saved, the strongest headline for a demo.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">4</div><div>
+    <span class="tag t-value">Value</span>
+    <h3>Vendor master clean-up (entity resolution)</h3>
+    <p>Merges "Acme Industrial", "Acme Industrial Inc" and "ACME IND" into one vendor using VAT and SIREN numbers, IBAN, address and name similarity. Merges you approve feed back into the matching rules.</p>
+    <p class="why">Duplicate detection is impossible on dirty vendor data. Fixing this first is what a senior engineer would do.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">5</div><div>
+    <span class="tag t-value">Value</span><span class="tag t-flex">Flex</span>
+    <h3>Bank-change fraud guard</h3>
+    <p>Flags any invoice whose IBAN differs from the vendor's payment history, a new vendor paid unusually fast, or an urgent "updated bank details" email. Risk-scores each one, holds the payment, and generates a callback checklist using the phone number on file, never the one in the email.</p>
+    <p class="why">Payment redirection is a multi-billion-dollar problem every year. "Blocked a fraud attempt" makes a great demo moment.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">6</div><div>
+    <span class="tag t-core">Core</span><span class="tag t-value">Value</span>
+    <h3>Reconciliation agent that works by exception</h3>
+    <p>Matches bank transactions to invoices one-to-one, one-to-many (a single payment for several invoices) and many-to-one (partial payments). Rules come first, then ML scoring, then the LLM only for leftover cases such as unclear payment references. Humans only see the exceptions.</p>
+    <p class="why">The month-end close is the job that keeps finance teams late. Show "96% auto-matched, 14 exceptions to review".</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">7</div><div>
+    <span class="tag t-value">Value</span><span class="tag t-flex">Flex</span>
+    <h3>Cash forecast with honest uncertainty, plus what-if scenarios</h3>
+    <p>A 13-week cash forecast from known invoice due dates, recurring costs and learned customer payment delays, with conformal prediction intervals (an 80% band that actually holds 80% of the time). Runway in months. Scenarios in plain language, such as "hire 3 engineers in March" or "the biggest client pays 30 days late", applied as structured changes to the model.</p>
+    <p class="why">Cash forecasting is the CFO's top priority. Backtested intervals show statistical maturity, not just a nice chart.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">8</div><div>
+    <span class="tag t-flex">Flex</span><span class="tag t-core">Core</span>
+    <h3>Governed autonomy: a policy file controls what the agent may do</h3>
+    <p>A readable <code>policy.yaml</code> sets the limits, for example: auto-approve matches above 0.95 confidence under €1,000; anything over €5,000 or with a changed IBAN needs a human. Every decision is logged with model version, input lineage, confidence, the rule that applied, who approved it and when. Human corrections feed back into the thresholds.</p>
+    <p class="why">This is the 2026 enterprise conversation ("governed autonomy" and audit trails). It shows you think like someone shipping to real finance teams.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">9</div><div>
+    <span class="tag t-flex">Flex</span>
+    <h3>Synthetic company simulator with planted problems</h3>
+    <p>Generates a realistic French SME: about 40 vendors, 2,000 invoices, 12 months of bank activity, seasonal patterns. It then plants known problems: 25 duplicates (exact and fuzzy), 3 fraud attempts, vendor price creep, unused subscriptions, late payers. The answer key lets you score every feature. Open-source it.</p>
+    <p class="why">This solves the "no real data" problem and becomes a reusable benchmark others can cite. Few portfolio projects ship their own evaluation environment.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">10</div><div>
+    <span class="tag t-flex">Flex</span>
+    <h3>Public eval report and leaderboard</h3>
+    <p>Extraction accuracy per field and per line item on SROIE, CORD and FATURA plus your own messy French invoices. Agent task success on 500 finance questions. Detection precision and recall on the simulator. Cost and latency per document for each model. Published as a page in the repo.</p>
+    <p class="why">Shows you evaluate, not just build. Engineering managers notice this first.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">11</div><div>
+    <span class="tag t-flex">Flex</span><span class="tag t-value">Value</span>
+    <h3>Cost-smart model routing</h3>
+    <p>Clean structured invoices skip the LLM entirely. Easy PDFs go to a small, cheap model, and only low-confidence ones go to a frontier model. A dashboard shows € per 1,000 documents and accuracy for each route.</p>
+    <p class="why">Real teams care about unit cost. "€0.40 per 1,000 invoices at 97% accuracy" is a great line.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">12</div><div>
+    <span class="tag t-flex">Flex</span>
+    <h3>MCP server so it plugs into any AI assistant</h3>
+    <p>Exposes read-only tools (<code>get_cash_position</code>, <code>find_duplicates</code>, <code>explain_variance</code>) over the Model Context Protocol, so Claude or another assistant can query the books with the same provenance guarantees.</p>
+    <p class="why">Very current in 2026 and cheap to add once the tools exist.</p>
+  </div></div>
+
+  <div class="card feature"><div class="num">13</div><div>
+    <span class="tag t-value">Value</span>
+    <h3>Auto-written monthly finance pack</h3>
+    <p>A one-click PDF with cash, burn, runway, budget vs actual with explained variances, top vendors, recovered money and open exceptions. Every number is clickable in the web version.</p>
+    <p class="why">The thing a founder would actually forward to investors, so it makes the product feel real.</p>
+  </div></div>
+
+</div>
+
+<div class="card" style="margin-top:14px">
+  <h3>Deliberately left out of v1</h3>
+  <p class="muted">Actually sending payments, posting to a real ERP, payroll, tax filing and becoming an approved e-invoicing platform (a Plateforme Agréée). Each one adds compliance burden without making the demo better. Keep everything read-only plus recommendations.</p>
+</div>
+
+<!-- ARCHITECTURE -->
+<h2 id="arch">4. Architecture</h2>
+<div class="arch">  Inputs                    Ingestion & extraction           Ledger (source of truth)
+  ─────────                 ──────────────────────           ───────────────────────
+  Factur-X / UBL / CII ──►  XML parser (exact)        ──┐
+  PDF / scans          ──►  Vision LLM + confidence   ──┼──►  Postgres: vendors, invoices,
+  Bank CSV / CAMT.053  ──►  Bank parser + normaliser  ──┤     lines, transactions, matches,
+  Emails (.eml)        ──►  Email risk signals        ──┘     decisions (append-only audit log)
+                                                                    │
+            ┌───────────────────────────────────────────────────────┤
+            ▼                       ▼                    ▼          ▼
+     Entity resolution      Duplicate hunter     Reconciliation   Cash forecast
+     (vendor clean-up)      (fuzzy + classifier) (rules→ML→LLM)   (+ conformal bands)
+            └──────────────┬────────┴────────────────────┴──────────┘
+                           ▼
+                Policy engine (policy.yaml)  ──►  Auto-act  /  Human approval queue
+                           │
+                           ▼
+        Agent orchestrator: the LLM plans; tools compute (SQL/Python only)
+          └── Provenance validator: blocks any number not traced to a tool output
+                           │
+           ┌───────────────┼──────────────────┬───────────────────┐
+           ▼               ▼                  ▼                   ▼
+       Chat UI        Monthly pack       MCP server        Eval + cost dashboard</div>
+
+<!-- STACK -->
+<h2 id="stack">5. Tech stack</h2>
+<div class="tablewrap"><table>
+  <tr><th>Layer</th><th>Choice</th><th>Why</th></tr>
+  <tr><td>Backend</td><td>Python, FastAPI, Pydantic</td><td>Typed schemas for every extracted field</td></tr>
+  <tr><td>Database</td><td>Postgres (+ pgvector), DuckDB for analytics</td><td>A real ledger with an append-only audit table; fast local maths</td></tr>
+  <tr><td>Pipelines</td><td>dbt or SQL models, Prefect or simple cron jobs</td><td>Shows data-engineering discipline</td></tr>
+  <tr><td>E-invoices</td><td><code>factur-x</code> Python library, lxml for UBL/CII</td><td>Exact field extraction when XML is present</td></tr>
+  <tr><td>Extraction</td><td>A vision LLM via API, with a small model routed first</td><td>Cost-smart routing with confidence scores</td></tr>
+  <tr><td>Matching</td><td>RapidFuzz, Splink (entity resolution), LightGBM pair classifier</td><td>Explainable fuzzy duplicates and vendor merging</td></tr>
+  <tr><td>Forecasting</td><td>StatsForecast / LightGBM, MAPIE for conformal intervals</td><td>Uncertainty bands you can backtest</td></tr>
+  <tr><td>Agent</td><td>Plain tool-calling or LangGraph, plus an MCP server</td><td>LLM as planner; tools do the maths</td></tr>
+  <tr><td>Observability</td><td>Langfuse or OpenTelemetry traces, MLflow</td><td>Every agent step traceable; experiment tracking</td></tr>
+  <tr><td>Frontend</td><td>Next.js, Tailwind, Recharts</td><td>Clickable numbers, approval queue, scenario sliders</td></tr>
+  <tr><td>Deploy</td><td>Docker Compose, then Fly.io / Render; GitHub Actions running evals in CI</td><td>A live demo link, plus evals that block bad merges</td></tr>
+</table></div>
+
+<!-- DATA -->
+<h2 id="data">6. Data sources</h2>
+<div class="grid g2">
+  <div class="card">
+    <h3>Public datasets (for extraction evals)</h3>
+    <ul>
+      <li><b>SROIE:</b> 1,000 scanned receipts (company, date, address, total)</li>
+      <li><b>CORD:</b> about 1,000 public receipts with line-level labels (CC BY 4.0)</li>
+      <li><b>FATURA:</b> generated invoice layouts (good for layout variety)</li>
+      <li><b>Your own:</b> 50–100 French invoices you render as Factur-X and as "ugly" scans</li>
+    </ul>
+    <p class="muted">Note: SROIE and CORD are receipts, not B2B invoices. Say so in the eval report.</p>
+  </div>
+  <div class="card">
+    <h3>Synthetic company (for everything else)</h3>
+    <ul>
+      <li>Vendors with SIREN/VAT numbers, IBANs and addresses (all fake)</li>
+      <li>Invoices rendered to Factur-X PDF, UBL, and scanned PDF with noise</li>
+      <li>Bank statements as CSV and CAMT.053</li>
+      <li>Emails, including planted "bank details changed" attempts</li>
+      <li>An answer key listing every planted issue</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PLAN -->
+<h2 id="plan">7. Six-week build plan</h2>
+<p class="sub">About 15–20 hours a week. Each week ends with something you can demo.</p>
+
+<div class="week"><div class="when">Week 1</div><h3>Foundations and the simulator</h3>
+  <ul>
+    <li>Ledger schema in Postgres: vendors, invoices, lines, transactions, matches, decisions (append-only)</li>
+    <li>Synthetic company generator with planted issues and an answer key</li>
+    <li>Render invoices to Factur-X, UBL and noisy scans; produce bank CSVs</li>
+  </ul>
+  <div class="done"><b>Done when:</b> one command generates a full fake company with a 12-month history.</div>
+</div>
+
+<div class="week"><div class="when">Week 2</div><h3>Ingestion, extraction and the first eval</h3>
+  <ul>
+    <li>Factur-X / UBL parser (exact path); vision-LLM extraction with per-field confidence (fallback path)</li>
+    <li>Model routing: XML first, then a small model, then a frontier model if confidence is low</li>
+    <li>Eval harness: field and line-item accuracy on SROIE, CORD, FATURA and your own set, plus cost per document</li>
+  </ul>
+  <div class="done"><b>Done when:</b> the first eval table is in the README, with accuracy and €/1k documents for each route.</div>
+</div>
+
+<div class="week"><div class="when">Week 3</div><h3>The money finders</h3>
+  <ul>
+    <li>Vendor entity resolution (Splink), with a review UI for merges</li>
+    <li>Fuzzy duplicate hunter: normalisation, candidate pairs, LightGBM pair scorer</li>
+    <li>Bank-change fraud guard: IBAN history, new-vendor velocity, email risk signals</li>
+  </ul>
+  <div class="done"><b>Done when:</b> the planted duplicates and fraud are found, with precision and recall reported, and the "€X recoverable" figure appears.</div>
+</div>
+
+<div class="week"><div class="when">Week 4</div><h3>Reconciliation and forecasting</h3>
+  <ul>
+    <li>Reconciliation, rules then ML then LLM: one-to-one, one-to-many, partial payments; an exception queue</li>
+    <li>13-week cash forecast with conformal intervals; runway</li>
+    <li>Backtest against simple baselines and report coverage of the 80% band</li>
+  </ul>
+  <div class="done"><b>Done when:</b> the auto-match rate is shown and the forecast beats the baselines in the backtest.</div>
+</div>
+
+<div class="week"><div class="when">Week 5</div><h3>Agent, provenance and governance</h3>
+  <ul>
+    <li>Agent orchestrator using tools only; provenance IDs on every number; a validator that blocks unproven numbers</li>
+    <li><code>policy.yaml</code> engine, approval queue, and an audit log with model version, inputs, confidence and approver</li>
+    <li>Plain-language scenarios mapped to structured forecast changes</li>
+    <li>500-question finance eval set with answers taken from the answer key; MCP server</li>
+  </ul>
+  <div class="done"><b>Done when:</b> the eval shows task success, and unverified numbers equal 0.</div>
+</div>
+
+<div class="week"><div class="when">Week 6</div><h3>Polish, deploy and launch</h3>
+  <ul>
+    <li>Next.js dashboard: overview, duplicates, fraud holds, reconciliation, forecast, chat, approvals</li>
+    <li>Auto-generated monthly finance pack (PDF plus a clickable web version)</li>
+    <li>Docker, public demo running on the synthetic company, evals running in CI</li>
+    <li>README with the architecture diagram, eval tables and a 90-second demo video</li>
+  </ul>
+  <div class="done"><b>Done when:</b> there's a live link, the repo is public, and the launch post is scheduled.</div>
+</div>
+
+<!-- METRICS -->
+<h2 id="metrics">8. Numbers to measure and publish</h2>
+<div class="tablewrap"><table>
+  <tr><th>Area</th><th>Metric</th><th>Target to aim for</th></tr>
+  <tr><td>Extraction</td><td>Field accuracy, line-item accuracy, € per 1k documents</td><td>≥ 97% on header fields with routing; report line items honestly</td></tr>
+  <tr><td>Duplicates</td><td>Precision / recall on planted duplicates; € recoverable</td><td>Recall ≥ 90% at precision ≥ 90%</td></tr>
+  <tr><td>Fraud guard</td><td>Planted attempts caught; false alarms per month</td><td>All planted attempts caught; under 2 false alarms a month</td></tr>
+  <tr><td>Reconciliation</td><td>Auto-match rate; wrong-match rate</td><td>≥ 95% auto-matched; under 0.5% wrong</td></tr>
+  <tr><td>Forecast</td><td>Error vs baselines; coverage of the 80% band</td><td>Beats baselines; coverage 78–82%</td></tr>
+  <tr><td>Agent</td><td>Task success on 500 questions; unverified numbers</td><td>≥ 90% success; 0 unverified numbers</td></tr>
+  <tr><td>Ops</td><td>p50 / p95 latency, cost per question</td><td>Published on the dashboard</td></tr>
+</table></div>
+<p class="muted" style="font-size:14px">These targets are yours to set, and they'll vary with the synthetic data. Publish whatever you actually get. Honest numbers are more convincing than perfect ones.</p>
+
+<!-- LAUNCH -->
+<h2 id="launch">9. How to launch it so companies notice</h2>
+<div class="grid g2">
+  <div class="card">
+    <h3>Content</h3>
+    <ul>
+      <li><b>Launch post:</b> a 90-second screen recording following the one-sentence pitch above</li>
+      <li><b>Post 2:</b> "How I made an AI that can't make up numbers" (the provenance validator)</li>
+      <li><b>Post 3:</b> "Your ERP misses these duplicate payments", showing the fuzzy cases</li>
+      <li><b>Post 4:</b> "France's e-invoicing reform from a developer's view" (Factur-X parsing)</li>
+      <li><b>Post 5:</b> the eval report: which model reads invoices best, and what it costs</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Assets</h3>
+    <ul>
+      <li>Public repo with a clean README and a "Try the demo" button</li>
+      <li>The simulator released as a separate small package (others will use it)</li>
+      <li>One-page case-study PDF for recruiters and prospects</li>
+      <li>A short Loom walkthrough of the architecture for technical interviews</li>
+    </ul>
+  </div>
+</div>
+
+<!-- RISKS -->
+<h2 id="risks">10. Risks and how to handle them</h2>
+<div class="tablewrap"><table>
+  <tr><th>Risk</th><th>Mitigation</th></tr>
+  <tr><td>Synthetic data looks too clean</td><td>Add noise on purpose: OCR blur, rotated scans, typos in references, partial payments, foreign currencies</td></tr>
+  <tr><td>Scope creep (6 weeks becomes 6 months)</td><td>Features 1–3, 5–9 are must-haves; 4 and 10–13 are stretch goals. Cut stretch goals before slipping the launch date.</td></tr>
+  <tr><td>LLM API costs during evals</td><td>Cache responses, use the small model by default, and run the full eval only in CI on merge</td></tr>
+  <tr><td>Looks like it handles real money</td><td>Clear "demo on synthetic data, read-only" labelling; no real company data in the public demo</td></tr>
+  <tr><td>Factur-X edge cases</td><td>Support the common profiles first; document what isn't supported</td></tr>
+</table></div>
+
+<!-- SOURCES -->
+<h2 id="sources">Sources</h2>
+<ul class="sources">
+  <li><a href="https://www.cfo.com/news/metric-of-the-month-detect-and-prevent-duplicate-or-erroneous-payments/">CFO.com / APQC: duplicate or erroneous payments benchmark</a></li>
+  <li><a href="https://www.corpay.com/en-AU/resources/blog/duplicate-payment-detection">Corpay: why ERPs miss fuzzy duplicates; APQC 0.8–2% range</a></li>
+  <li><a href="https://trustpair.com/blog/vendor-fraud-schemes/">Trustpair: FBI IC3 2025 BEC losses ($3.046B)</a></li>
+  <li><a href="https://www.corpay.com/en-IE/resources/blog/business-email-compromise-ap">Corpay: AFP 2026 survey on BEC in accounts payable</a></li>
+  <li><a href="https://www.pymnts.com/back-office/2026/cfos-forecast-better-when-finance-sees-more/">PYMNTS: cash flow forecasting struggles (Aug 2026)</a></li>
+  <li><a href="https://www.fticonsulting.com/-/media/files/insights/reports/2026/feb/global-cfo-survey-2026">FTI Consulting: 2026 Global CFO Survey</a></li>
+  <li><a href="https://invopop.com/blog/e-invoicing-in-france-rules-deadlines-and-penalties">Invopop: France e-invoicing rules and deadlines</a></li>
+  <li><a href="https://www.editelgroup.com/knowledge-hub/blogs/e-invoicing-france/">Editel: France e-invoicing key dates</a></li>
+  <li><a href="https://thenextweb.com/news/rillet-100m-series-c-1bn-accounting-ai">The Next Web: Rillet $100M at $1B valuation</a></li>
+  <li><a href="https://puzzle.io/blog/best-ai-accounting-software">Puzzle: AI accounting tools comparison</a></li>
+  <li><a href="https://zip.com/blog/ai-agents-for-finance">Zip: siloed finance AI tools limit gains</a></li>
+  <li><a href="https://hackernoon.com/can-your-llm-handle-an-invoice-i-tested-5heres-the-truth">HackerNoon: LLM invoice extraction benchmark</a></li>
+  <li><a href="https://arxiv.org/pdf/2608.26114">arXiv: CIFQA, a deterministic tool-grounded financial QA framework</a></li>
+  <li><a href="https://arxiv.org/pdf/2603.04663">arXiv: VeNRA, neuro-symbolic financial reasoning</a></li>
+  <li><a href="https://www.evolution.ai/post/designing-human-in-the-loop-guardrails-for-agentic-financial">Evolution AI: human-in-the-loop guardrails and audit logging</a></li>
+  <li><a href="https://blog.auditoria.ai/finance-ai-2026-governed-autonomy">Auditoria: governed autonomy in finance AI</a></li>
+  <li><a href="https://invoicedataextraction.com/blog/invoice-dataset">Invoice dataset guide (SROIE, FATURA, synthetic)</a></li>
+  <li><a href="https://github.com/clovaai/cord">CORD dataset (GitHub)</a></li>
+</ul>
+
+<footer>Project plan generated Nov 2026. Market figures come from the sources above; performance targets are suggestions to validate during the build.</footer>
+</div>
+</body>
+</html>
